@@ -3,145 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShopTN - Shop Roblox Uy Tín Số 1</title>
+    <title>ShopTN - Shop Roblox Demo</title>
     <style>
-        :root { --main-color: #ff4757; --bg-card: #ffffff; --text-dark: #2f3542; }
-        body { font-family: 'Roboto', sans-serif; background-color: #f1f2f6; margin: 0; padding: 0; color: var(--text-dark); }
+        :root { --main: #ff4757; --dark: #2f3542; }
+        body { font-family: 'Arial', sans-serif; background: #f4f7f6; margin: 0; padding: 0; }
+        header { background: var(--dark); color: white; padding: 10px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+        .logo { font-size: 24px; font-weight: bold; color: var(--main); }
+        .balance-box { background: var(--main); padding: 5px 15px; border-radius: 20px; font-weight: bold; }
         
-        /* Header & Nav */
-        header { background: #2f3542; color: white; padding: 10px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
-        .logo { font-size: 28px; font-weight: bold; color: var(--main-color); text-transform: uppercase; }
-        nav a { color: white; text-decoration: none; margin-left: 20px; font-weight: bold; transition: 0.3s; }
-        nav a:hover { color: var(--main-color); }
-
-        /* Banner */
-        .banner { background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://wallpaperaccess.com/full/1151163.jpg'); background-size: cover; background-position: center; height: 350px; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; text-align: center; }
-        .banner h1 { font-size: 45px; margin: 0; }
-
-        /* Container */
-        .container { max-width: 1200px; margin: auto; padding: 20px; }
-        .title { border-left: 6px solid var(--main-color); padding-left: 15px; margin: 30px 0; font-size: 24px; text-transform: uppercase; font-weight: bold; }
-
-        /* Grid Hệ thống Acc */
+        .container { max-width: 1000px; margin: 20px auto; padding: 0 15px; }
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-        .card { background: var(--bg-card); border-radius: 12px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: 0.3s; position: relative; }
-        .card:hover { transform: translateY(-10px); }
-        .card img { width: 100%; height: 180px; object-fit: cover; }
-        .tag { position: absolute; top: 10px; left: 10px; background: var(--main-color); color: white; padding: 5px 10px; border-radius: 5px; font-size: 12px; font-weight: bold; }
+        .card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: center; }
+        .card img { width: 100%; height: 160px; object-fit: cover; }
+        .card-body { padding: 15px; }
+        .price { font-size: 20px; color: var(--main); font-weight: bold; margin: 10px 0; }
         
-        .card-body { padding: 15px; text-align: center; }
-        .price { color: var(--main-color); font-size: 22px; font-weight: bold; margin: 10px 0; }
-        .details { font-size: 14px; color: #747d8c; margin-bottom: 15px; border-top: 1px solid #eee; padding-top: 10px; }
-        .btn-buy { background: var(--main-color); color: white; border: none; padding: 12px 0; width: 100%; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px; transition: 0.3s; }
-        .btn-buy:hover { background: #ff6b81; }
+        button { background: var(--main); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; width: 100%; font-weight: bold; }
+        button:hover { opacity: 0.9; }
 
-        /* Form Nạp Thẻ & Bank */
-        .flex-box { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 40px; }
-        .box { flex: 1; min-width: 300px; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-        input, select { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; outline: none; }
-        .bank-info { background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px dashed #ccc; margin-top: 10px; }
+        .form-box { background: white; padding: 20px; border-radius: 10px; margin-top: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        input { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; }
+        
+        /* Hiệu ứng hiện kết quả mua hàng */
+        #result { display: none; background: #dff9fb; border: 2px dashed #22a6b3; padding: 15px; margin-top: 20px; border-radius: 10px; color: #130f40; }
     </style>
 </head>
 <body>
 
 <header>
     <div class="logo">ShopTN.Com</div>
-    <nav>
-        <a href="#">Trang Chủ</a>
-        <a href="#napthe">Nạp Thẻ</a>
-        <a href="#bank">ATM/BANK</a>
-        <a href="#" style="background: var(--main-color); padding: 5px 15px; border-radius: 5px;">Số dư: 100000đ</a>
-    </nav>
+    <div class="balance-box">Số dư: <span id="myBalance">0</span>đ</div>
 </header>
 
-<div class="banner">
-    <h1>SHOPTN - ROBLOX AUTOMATIC</h1>
-    <p>Hệ thống bán Acc, Random, Cày thuê tự động 100%</p>
-</div>
-
 <div class="container">
-    <div class="title">Danh Mục Acc Blox Fruit</div>
+    <h2>DANH MỤC SẢN PHẨM</h2>
     <div class="grid">
         <div class="card">
-            <span class="tag">GIẢM 50%</span>
-            <img src="https://i.ytimg.com/vi/W_YmY79lX6c/maxresdefault.jpg" alt="Acc">
+            <img src="https://i.ytimg.com/vi/W_YmY79lX6c/maxresdefault.jpg" alt="Random">
             <div class="card-body">
-                <h3>Acc Blox Fruit Max Level</h3>
-                <div class="details">Sở hữu: Leopard, T-Rex, Melee V2, 30M Beli</div>
+                <h3>Random Acc Roblox 150K</h3>
+                <p>Tỉ lệ 100% trúng Acc xịn, có lộc!</p>
                 <div class="price">150,000đ</div>
-                <button class="btn-buy" onclick="checkMoney()">MUA NGAY</button>
-            </div>
-        </div>
-
-        <div class="card">
-            <span class="tag">HOT</span>
-            <img src="https://img.youtube.com/vi/DOUmshS6i08/maxresdefault.jpg" alt="Random">
-            <div class="card-body">
-                <h3>Random Siêu Cấp V3</h3>
-                <div class="details">Tỉ lệ 30% trúng Mochi V2, 100% trúng Acc Level 2000+</div>
-                <div class="price">20,000đ</div>
-                <button class="btn-buy" onclick="checkMoney()">THỬ VẬN MAY</button>
-            </div>
-        </div>
-
-        <div class="card">
-            <span class="tag">GIÁ RẺ</span>
-            <img src="https://api.bloxflip.com/images/games/blox-fruits.png" alt="Acc">
-            <div class="card-body">
-                <h3>Acc Trắng Thông Tin</h3>
-                <div class="details">Level 1500, Full bộ kiếm huyền thoại</div>
-                <div class="price">50,000đ</div>
-                <button class="btn-buy" onclick="checkMoney()">MUA NGAY</button>
+                <button onclick="buyProcess(150000)">MUA NGAY</button>
             </div>
         </div>
     </div>
 
-    <div class="flex-box">
-        <div class="box" id="napthe">
-            <div class="title" style="margin-top:0">Nạp Thẻ Cào</div>
-            <select id="telco">
-                <option value="">-- Chọn nhà mạng --</option>
-                <option value="VIETTEL">Viettel</option>
-                <option value="VINAPHONE">Vinaphone</option>
-                <option value="MOBIFONE">Mobifone</option>
-            </select>
-            <select id="amount">
-                <option value="">-- Chọn mệnh giá --</option>
-                <option value="10000">10,000đ</option>
-                <option value="20000">20,000đ</option>
-                <option value="50000">50,000đ</option>
-                <option value="100000">100,000đ</option>
-            </select>
-            <input type="text" placeholder="Số Seri">
-            <input type="text" placeholder="Mã Thẻ">
-            <button class="btn-buy" onclick="napThe()">NẠP THẺ NGAY</button>
-        </div>
+    <div id="result">
+        <strong>MUA THÀNH CÔNG!</strong><br>
+        Tài khoản: <span id="accRes"></span><br>
+        Mật khẩu: <span id="passRes"></span><br>
+        <small>(Hãy lưu lại thông tin này!)</small>
+    </div>
 
-        <div class="box" id="bank">
-            <div class="title" style="margin-top:0">Chuyển Khoản / Ví</div>
-            <div class="bank-info">
-                <strong>MB BANK (Ngân hàng Quân Đội)</strong><br>
-                Số TK: <b>0355484981</b><br>
-                Chủ TK: <b>NGUYEN THANH NHAN</b><br>
-                Nội dung: <b>NapTN </b>
-            </div>
-            <p style="font-size: 13px; color: red;">* Lưu ý: Ghi đúng nội dung để được cộng tiền sau 30 giây.</p>
-        </div>
+    <div class="form-box">
+        <h3>NẠP TIỀN TEST WEB</h3>
+        <p>Nhập mã bất kỳ để được cộng 100,000đ (Dùng để test tính năng mua)</p>
+        <input type="text" id="testCode" placeholder="Nhập mã nạp thẻ/seri...">
+        <button style="background: #2ed573;" onclick="rechargeTest()">NẠP TIỀN (THỬ NGHIỆM)</button>
     </div>
 </div>
 
 <script>
-    function checkMoney() {
-        alert("Thất bại: Số dư của bạn không đủ! Vui lòng nạp tiền vào ShopTN.");
+    // Khởi tạo số dư
+    let balance = 0;
+
+    // Hàm nạp tiền giả lập
+    function rechargeTest() {
+        const code = document.getElementById('testCode').value;
+        if(code === "") {
+            alert("Vui lòng nhập mã test!");
+            return;
+        }
+        balance += 100000; // Cộng 100k mỗi lần bấm
+        updateDisplay();
+        alert("Nạp thành công 100,000đ vào tài khoản!");
+        document.getElementById('testCode').value = "";
     }
 
-    function napThe() {
-        const telco = document.getElementById('telco').value;
-        if(telco == "") {
-            alert("Vui lòng chọn nhà mạng!");
-        } else {
-            alert("Hệ thống đã nhận thẻ " + telco + ". Vui lòng đợi 30s để duyệt thẻ!");
+    // Hàm cập nhật hiển thị số dư
+    function updateDisplay() {
+        document.getElementById('myBalance').innerText = balance.toLocaleString();
+    }
+
+    // Hàm xử lý mua acc
+    function buyProcess(price) {
+        if (balance < price) {
+            alert("Bạn không đủ tiền! Hãy dùng chức năng Nạp Tiền bên dưới để test.");
+            return;
         }
+
+        // Trừ tiền
+        balance -= price;
+        updateDisplay();
+
+        // Tạo tài khoản mật khẩu ngẫu nhiên để test
+        const randomUser = "ShopTN_" + Math.floor(Math.random() * 9999);
+        const randomPass = "Pass_" + Math.random().toString(36).substring(7);
+
+        // Hiển thị kết quả
+        document.getElementById('result').style.display = "block";
+        document.getElementById('accRes').innerText = randomUser;
+        document.getElementById('passRes').innerText = randomPass;
+
+        alert("Mua thành công! Kéo xuống để xem tài khoản.");
+        window.scrollTo(0, document.body.scrollHeight);
     }
 </script>
 
